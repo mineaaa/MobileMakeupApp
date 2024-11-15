@@ -33,9 +33,8 @@ export default function App() {
           })}
         >
           <Tab.Screen name="Home" component={Home} />
-          <Tab.Screen
-            name="Search"
-            component={() => (
+          <Tab.Screen name="Search">
+            {() => (
               <Stack.Navigator>
                 <Stack.Screen
                   name="Back"
@@ -49,10 +48,9 @@ export default function App() {
                 />
               </Stack.Navigator>
             )}
-          />
+          </Tab.Screen>
         </Tab.Navigator>
       </NavigationContainer>
     </PaperProvider>
   );
 }
-

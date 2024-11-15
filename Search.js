@@ -52,7 +52,7 @@ export default function Search({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 40,
+        marginTop: 0,
         backgroundColor: '#ffecf2',
         alignItems: 'center',
         justifyContent: 'center',
