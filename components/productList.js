@@ -15,7 +15,7 @@ export default function ProductList({ products, navigation }) {
                             resizeMode="cover"
                         />
                         <Card.Title
-                            title={<Text>{item.name}</Text>}
+                            title={<Text style={{ fontSize: 18 }}>{item.name}</Text>}
                             titleNumberOfLines={2}
                         />
                         <Card.Actions>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         overflow: 'visible',
     },
     image: {
-        height: 250,
+        height: 350,
         width: '100%',
         backgroundColor: 'white',
     },

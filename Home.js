@@ -17,7 +17,7 @@ const category = [
 export default function Home({ navigation }) {
     return (
         <View style={styles.container}>
-            <Text style={styles.welcomeText}>Welcome to my makeup app!</Text>
+            <Text style={styles.welcomeText}>Categories</Text>
             <FlatList
                 data={category}
                 keyExtractor={(item) => item.key}
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#ffecf2",
-        paddingVertical: 40,
+        paddingVertical: 20,
 
     },
     card: {

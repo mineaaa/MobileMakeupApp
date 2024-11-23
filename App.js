@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Home from './Home';
 import Search from './Search';
+import Favourites from './Favourites'
 import ProductInformation from './components/ProductInformation';
 
 const Tab = createBottomTabNavigator();
@@ -24,6 +25,9 @@ export default function App() {
                 iconName = 'home';
               } else if (route.name === 'Search') {
                 iconName = 'search';
+              }
+              else if (route.name == 'Favourites') {
+                iconName = 'heart'
               }
 
               return <Ionicons name={iconName} size={size} color={color} />;
@@ -49,6 +53,7 @@ export default function App() {
               </Stack.Navigator>
             )}
           </Tab.Screen>
+          <Tab.Screen name="Favourites" component={Favourites} />
         </Tab.Navigator>
       </NavigationContainer>
     </PaperProvider>
