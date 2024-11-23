@@ -1,17 +1,17 @@
-import { View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList, Image } from "react-native";
 import { Card, Text } from "react-native-paper";
 
 const category = [
-    { name: "Blush", key: "blush" },
-    { name: "Bronzer", key: "bronzer" },
-    { name: "Eyebrow", key: "eyebrow" },
-    { name: "Eyeliner", key: "eyeliner" },
-    { name: "Eyeshadow", key: "eyeshadow" },
-    { name: "Foundation", key: "foundation" },
-    { name: "Lipliner", key: "lipliner" },
-    { name: "Lipstick", key: "lipstick" },
-    { name: "Mascara", key: "mascara" },
-    { name: "Nail Polish", key: "nail_polish" }
+    { name: "Blush", key: "blush", image: require("./assets/dior_poskipuna.jpg") },
+    { name: "Bronzer", key: "bronzer", image: require("./assets/bronzer.jpg") },
+    { name: "Eyebrow", key: "eyebrow", image: require("./assets/eyebrowpencil.jpg") },
+    { name: "Eyeliner", key: "eyeliner", image: require("./assets/lanina_eyeliner.jpeg") },
+    { name: "Eyeshadow", key: "eyeshadow", image: require("./assets/eyeshadow_palette.jpg") },
+    { name: "Foundation", key: "foundation", image: require("./assets/foundation.jpg") },
+    { name: "Lipliner", key: "lipliner", image: require("./assets/lipliner.jpg") },
+    { name: "Lipstick", key: "lipstick", image: require("./assets/lipstick.jpg") },
+    { name: "Mascara", key: "mascara", image: require("./assets/mascara.jpg") },
+    { name: "Nail Polish", key: "nail_polish", image: require("./assets/nailpolish.jpg") },
 ];
 
 export default function Home({ navigation }) {
@@ -25,6 +25,7 @@ export default function Home({ navigation }) {
                     <Card style={styles.card} onPress={() => navigation.navigate("Search", { productType: item.key })}>
                         <Card.Content style={styles.cardContent}>
                             <Text style={styles.cardText}>{item.name}</Text>
+                            <Image source={item.image} style={styles.cardImage} />
                         </Card.Content>
                     </Card>
                 )}
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
         marginVertical: 25,
     },
     cardContent: {
-        flexDirection: "row",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
     },
@@ -64,5 +65,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
         textAlign: 'center',
+    },
+    cardImage: {
+        width: 70,
+        height: 120,
     }
+
 });
