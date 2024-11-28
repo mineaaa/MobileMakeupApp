@@ -1,29 +1,25 @@
 import { useState } from "react";
 import { View, StyleSheet, ActivityIndicator } from "react-native";
-import { TextInput, Button, Text } from "react-native-paper";
+import { TextInput, Button } from "react-native-paper";
 import ProductList from "./components/productList";
-import FetchProducts from "./productApi";
+import { fetchProducts, fetchBrands } from "./productApi";
 import { getDatabase, push, ref } from "firebase/database";
 import { app } from "./firebaseConfig";
 
 const database = getDatabase(app);
 
+
 export default function Search({ navigation }) {
-    const [productType, setProductType] = useState('');
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [typingQuery, setTypingQuery] = useState('');
 
-    const handleSearch = () => {
+    const handleSearch = async () => {
         setLoading(true);
-        FetchProducts(productType)
-            .then(data => {
-                setProducts(data);
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error("Error fetching products:", error);
-                setLoading(false);
-            });
+        const productsBrand = await fetchBrands(typingQuery);
+        const productsType = await fetchProducts(typingQuery);
+        setProducts([...productsBrand, ...productsType]);
+        setLoading(false);
     };
 
     const saveToFavourites = (product) => {
@@ -32,21 +28,26 @@ export default function Search({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <TextInput
-                style={{ width: '80%', marginBottom: 10 }}
-                label="Type in a product"
-                mode="outlined"
-                value={productType}
-                onChangeText={text => setProductType(text)}
-            />
-            <Button
-                loading={loading}
-                mode="outlined"
-                icon="search-web"
-                onPress={handleSearch}
-            >
-                Search
-            </Button>
+            <View style={styles.searchingStyle}>
+                <TextInput
+                    style={styles.textInput}
+                    label="Search..."
+                    mode="outlined"
+                    value={typingQuery}
+                    onChangeText={setTypingQuery}
+                />
+                <Button
+                    icon="search-web"
+                    onPress={handleSearch}
+                    labelStyle={{ fontSize: 35, color: 'black' }}
+                >
+                </Button>
+                <Button
+                    icon="filter-menu-outline"
+                    onPress={() => navigation.navigate("Filter")}
+                    labelStyle={{ fontSize: 35, color: 'black' }}
+                />
+            </View>
             {loading ? (
                 <ActivityIndicator size="large" style={{ marginTop: 20 }} />
             ) : (
@@ -68,4 +69,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    searchingStyle: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '90%',
+        marginBottom: 10,
+        marginTop: 10,
+    },
+    textInput: {
+        flex: 1,
+        marginRight: 10,
+    },
+
 });
