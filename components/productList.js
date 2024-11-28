@@ -1,7 +1,7 @@
 import { View, FlatList, StyleSheet } from "react-native";
 import { Text, IconButton, Card } from "react-native-paper";
 
-export default function ProductList({ products, navigation }) {
+export default function ProductList({ products, navigation, saveToFavourites }) {
     return (
         <FlatList
             data={products}
@@ -19,12 +19,12 @@ export default function ProductList({ products, navigation }) {
                             titleNumberOfLines={2}
                         />
                         <Card.Actions>
-                            <IconButton
-                                icon="cards-heart-outline"
-                                onPress={() => {
-                                    /*lemppariksi lisäämisen metodi tulee tähän*/
-                                }}
-                            />
+                            {saveToFavourites && (
+                                <IconButton
+                                    icon="cards-heart-outline"
+                                    onPress={() => saveToFavourites(item)}
+                                />
+                            )}
                             <IconButton
                                 icon="information-outline"
                                 onPress={() => navigation.navigate("ProductInformation", { makeupProduct: item })}
