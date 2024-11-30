@@ -17,7 +17,7 @@ const category = [
 export default function Home({ navigation }) {
     return (
         <View style={styles.container}>
-            <Text style={styles.welcomeText}>Categories</Text>
+            <Text style={styles.welcomeText}>🎀Categories🎀</Text>
             <FlatList
                 data={category}
                 keyExtractor={(item) => item.key}

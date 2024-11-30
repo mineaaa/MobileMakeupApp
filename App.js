@@ -8,6 +8,7 @@ import Home from './Home';
 import Search from './Search';
 import Favourites from './Favourites'
 import ProductInformation from './components/ProductInformation';
+import Filter from './Filter';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -48,12 +49,32 @@ export default function App() {
                 <Stack.Screen
                   name="ProductInformation"
                   component={ProductInformation}
-                  options={{ title: 'Product Details' }}
+                  options={{ title: '💄Product Details💄' }}
+                />
+                <Stack.Screen
+                  name="Filter"
+                  component={Filter}
+                  options={{ title: 'Filter' }}
                 />
               </Stack.Navigator>
             )}
           </Tab.Screen>
-          <Tab.Screen name="Favourites" component={Favourites} />
+          <Tab.Screen name="Favourites">
+            {() => (
+              <Stack.Navigator>
+                <Stack.Screen
+                  name="Favourites"
+                  component={Favourites}
+                  options={{ title: '💗Your Favourites💗' }}
+                />
+                <Stack.Screen
+                  name="ProductInformation"
+                  component={ProductInformation}
+                  options={{ title: '💄Product Details💄' }}
+                />
+              </Stack.Navigator>
+            )}
+          </Tab.Screen>
         </Tab.Navigator>
       </NavigationContainer>
     </PaperProvider>
