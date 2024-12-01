@@ -12,7 +12,7 @@ In the Home-view the user can see what kind of categories there are of products.
 The categories are: blush, bronzer, eyebrow, eyeliner, eyeshadow, foundation, lipliner, lipstick, mascara and nailpolish.
 
 ### Search
-From the Home-screen the user is able to navigate to the Search-view. In the search they can search for products based on the categories (blush, bronzer ect.), the tags (vegan, Canadian ect.) and brand (NYX, Clinique). 
+From the Home-screen the user is able to navigate to the Search-view. In the search they can search for products based on the categories (blush, bronzer ect.), the tags (vegan, Canadian ect.) and brand (NYX, Clinique ect.). 
 
 Based on the user's search they will be met with a list of products. From each of the products the user will be able to open an info card detailing the products information, brand, price and tags.
 
