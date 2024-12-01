@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, StyleSheet, ActivityIndicator } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import ProductList from "./components/productList";
-import { fetchProducts, fetchBrands } from "./productApi";
+import { fetchProducts, fetchBrands, fetchTags } from "./productApi";
 import { getDatabase, push, ref, } from "firebase/database";
 import { app } from "./firebaseConfig";
+import Filter from "./Filter";
 
 const database = getDatabase(app);
 
@@ -13,23 +14,32 @@ export default function Search({ navigation }) {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [typingQuery, setTypingQuery] = useState('');
+    const [modalShowing, setModalShowing] = useState(false);
 
     //kyselyn tekemisen avulla voidaan hakea joko tuotteen tyypillä, esim. onko poskipuna tai sitten sen merkillä esim. ny
     //productApissa on otettu molempien endpointit ja alapuolella olevat productsBrand ja productsType odottavat, 
     //mitä käyttäjä kirjoittaa inputkenttään.
     //käyttäjän hakusanan perusteella lähetetään API:lle pyyntö
-    //laitetaan haun jälkeen kaikki setProducts taulukkoon ilman päällekkäisyyksiä
+    //laitetaan haun jälkeen kaikki allProducts taulukkoon ilman päällekkäisyyksiä
 
     const handleSearch = async () => {
         setLoading(true);
         const productsBrand = await fetchBrands(typingQuery);
         const productsType = await fetchProducts(typingQuery);
-        setProducts([...productsBrand, ...productsType]);
+        const productTags = await fetchTags(typingQuery);
+        const allProducts = [...productsBrand, ...productsType, ...productTags];
+
+        setProducts(allProducts);
         setLoading(false);
+        setModalShowing(false);
     };
 
     const saveToFavourites = (product) => {
         push(ref(database, "favourites/"), product);
+    };
+
+    const toggleModal = () => {
+        setModalShowing(!modalShowing);
     };
 
     return (
@@ -50,7 +60,7 @@ export default function Search({ navigation }) {
                 </Button>
                 <Button
                     icon="filter-menu-outline"
-                    onPress={() => navigation.navigate("Filter")}
+                    onPress={toggleModal}
                     labelStyle={{ fontSize: 35, color: 'black' }}
                 />
             </View>
@@ -63,6 +73,11 @@ export default function Search({ navigation }) {
                     navigation={navigation}
                 />
             )}
+            {modalShowing && (
+                <Filter
+                    navigation={navigation}
+                    toggleModal={toggleModal}
+                />)}
         </View>
     );
 }
