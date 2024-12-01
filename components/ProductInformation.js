@@ -11,6 +11,7 @@ export default function ProductInformation({ route }) {
             {makeupProduct.image_link && <Image source={{ uri: makeupProduct.image_link }} style={styles.image} />}
             <Text style={styles.name}>{makeupProduct.name}</Text>
             <Text style={styles.brand}>{makeupProduct.brand}</Text>
+            <Text style={styles.brand}>{makeupProduct.tag_list}</Text>
             <Text style={styles.description}>{makeupProduct.description || " "}</Text>
             <Text style={styles.price}>Price: ${makeupProduct.price}</Text>
         </ScrollView>
