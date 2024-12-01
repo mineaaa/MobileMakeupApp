@@ -1,7 +1,13 @@
 import { View, FlatList, StyleSheet } from "react-native";
 import { Text, IconButton, Card } from "react-native-paper";
 
-export default function ProductList({ products, navigation, saveToFavourites }) {
+export default function ProductList({ products = [], favourites = [], navigation, saveToFavourites }) {
+
+    const favouriteStatus = (item) => {
+        return favourites.some((favourite) => favourite.id === item.id)
+            ? "cards-heart" : "cards-heart-outline";
+    };
+
     return (
         <FlatList
             data={products}
@@ -9,11 +15,15 @@ export default function ProductList({ products, navigation, saveToFavourites }) 
             renderItem={({ item }) => (
                 <Card style={styles.listingStyle}>
                     <View style={styles.cardContainer}>
-                        <Card.Cover
-                            source={{ uri: item.image_link }}
-                            style={styles.image}
-                            resizeMode="cover"
-                        />
+                        {item.image_link ? (
+                            <Card.Cover
+                                source={{ uri: item.image_link }}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                        ) : (
+                            <Text style={styles.noImageText}>No Image Available</Text>
+                        )}
                         <Card.Title
                             title={<Text style={{ fontSize: 18 }}>{item.name}</Text>}
                             titleNumberOfLines={2}
@@ -21,7 +31,7 @@ export default function ProductList({ products, navigation, saveToFavourites }) 
                         <Card.Actions>
                             {saveToFavourites && (
                                 <IconButton
-                                    icon="cards-heart-outline"
+                                    icon={favouriteStatus(item)}
                                     onPress={() => saveToFavourites(item)}
                                 />
                             )}
@@ -53,5 +63,14 @@ const styles = StyleSheet.create({
         height: 350,
         width: '100%',
         backgroundColor: 'white',
+    },
+    noImageText: {
+        height: 350,
+        width: '100%',
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        fontSize: 16,
+        color: 'gray',
+        backgroundColor: '#f0f0f0',
     },
 });
